@@ -1,6 +1,4 @@
 import mongoose from 'mongoose';
-import uniqueValidator from 'mongoose-unique-validator';
-import bcrypt from 'bcrypt';
 
 const UserSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
@@ -9,15 +7,12 @@ const UserSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now }
 });
 
-UserSchema.pre('save', function(next) {
-  if (this.isModified('password')) {
-    this.password = bcrypt.hashSync(this.password, 10);
-  }
-  next();
-});
+// Method to compare passwords (plain-text comparison)
+UserSchema.methods.comparePassword = function(candidatePassword) {
+  return candidatePassword === this.password;
+};
 
-UserSchema.plugin(uniqueValidator);
-
+// Create the User model
 const User = mongoose.model('User', UserSchema);
 
-export default User;  // Ensure this line is included
+export default User;
