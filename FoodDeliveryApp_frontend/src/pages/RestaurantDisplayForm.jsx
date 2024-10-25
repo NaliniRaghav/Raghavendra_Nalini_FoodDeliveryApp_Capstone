@@ -28,7 +28,7 @@ const RestaurantDisplayForm = () => {
   if (error) return <p style={{ color: 'red' }}>{error}</p>;
 
   return (
-    <div className="restaurant-display-form">
+    <div  className="container">
       <h1>Available Restaurants</h1>
       <ul>
         {restaurants.map((restaurant) => (

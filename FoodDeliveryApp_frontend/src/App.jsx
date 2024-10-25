@@ -3,6 +3,8 @@ import LoginPage from './pages/LoginPage';
 import RestaurantDisplayForm from './pages/RestaurantDisplayForm';
 import ResetPasswordPage from './pages/PasswordResetPage';
 import SignupPage from './pages/SignUpForm';
+import './styles.css';
+
 
 function App() {
   const [currentForm, setCurrentForm] = useState('login');  

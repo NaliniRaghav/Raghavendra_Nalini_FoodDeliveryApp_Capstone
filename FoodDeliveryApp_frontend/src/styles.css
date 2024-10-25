@@ -1,43 +1,125 @@
+/* General Styles */
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Arial', sans-serif;
+  background-color: #80add7;
   margin: 0;
   padding: 0;
-  background-color: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
 }
 
-.login-container {
-  max-width: 400px;
-  margin: 50px auto;
-  padding: 20px;
-  background: white;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
-}
-
-form div {
-  margin-bottom: 10px;
-}
-
-label {
-  display: block;
-  margin-bottom: 5px;
-}
-
-input {
+/* Container Styles */
+.container {
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 30px;
   width: 100%;
-  padding: 8px;
-  box-sizing: border-box;
+  max-width: 400px;
 }
 
+/* Form Heading */
+h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Input Fields */
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  background-color: #f9f9f9;
+  font-size: 16px;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus {
+  border-color: #6c63ff;
+  outline: none;
+  background-color: #fff;
+}
+
+/* Buttons */
 button {
   width: 100%;
-  padding: 10px;
-  background-color: #4caf50;
-  color: white;
+  
+  background-color: #d33a14;
+  color: rgb(7, 5, 5);
+  padding: 12px;
   border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+
+/* Error Messages */
+p {
+  color: red;
+  font-size: 14px;
+  margin-top: 10px;
+  text-align: center;
+}
+
+/* Additional Links */
+button[type="button"] {
+  background-color: transparent;
+  color: #6c63ff;
+  text-decoration: underline;
+  padding: 0;
+  border: none;
+  margin-top: 15px;
   cursor: pointer;
 }
 
-button:disabled {
-  background-color: #ccc;
+button[type="button"]:hover {
+  color: #333;
+}
+
+/* Specific Reset Button Style */
+.reset-password-container button {
+  background-color: #ff6363;
+}
+
+.reset-password-container button:hover {
+  background-color: #e14e4e;
+}
+
+/* Form Container Style */
+.login-container,
+.signup-container,
+.reset-password-container {
+  margin-top: 20px;
+}
+
+ 
+ 
+/* Buttons */
+button {
+  width: 100%;
+  background-color: #d3b8ff; /* Light purple background */
+  color: black; /* Button text is black */
+  padding: 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* Specific Reset Button Style */
+.reset-password-container button {
+  background-color: #d3b8ff; /* Light purple background for reset button */
+  color: black; /* Button text is black for reset button as well */
 }

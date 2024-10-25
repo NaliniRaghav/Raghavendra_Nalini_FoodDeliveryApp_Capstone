@@ -40,7 +40,7 @@ const ResetPasswordPage = ({ setCurrentForm }) => {
   };
 
   return (
-    <div className="reset-password-container">
+    <div className="container">
       <h1>Reset Password</h1>
       <form onSubmit={handleSubmit}>
         <input

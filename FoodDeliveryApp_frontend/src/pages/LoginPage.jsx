@@ -38,8 +38,8 @@ const LoginPage = ({ setCurrentForm }) => {
   };
 
   return (
-    <div className="login-container">
-      <h1>Login</h1>
+    <div className="container">
+      <h1>Welcome to Food Delivery App</h1>
       <form onSubmit={handleSubmit}>
         <input
           type="text"

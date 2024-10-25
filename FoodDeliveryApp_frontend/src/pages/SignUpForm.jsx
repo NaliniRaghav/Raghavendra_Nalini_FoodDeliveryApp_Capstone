@@ -87,7 +87,7 @@ const SignupPage = ({ setCurrentForm }) => {
   };
 
   return (
-    <div className="signup-container">
+    <div  className="container">
       <h1>Sign Up</h1>
       <form onSubmit={handleSubmit}>
         <input
