@@ -3,10 +3,15 @@ import Restaurant from '../models/restaurant.js';
 
 const router = express.Router();
 
-// Get all restaurants
+// Get all restaurants with optional search query
 router.get('/', async (req, res) => {
+  const { search } = req.query;
   try {
-    const restaurants = await Restaurant.find().populate('menu reviews');
+    const query = search
+      ? { $or: [ { name: { $regex: search, $options: 'i' } }, { cuisine: { $regex: search, $options: 'i' } } ] }
+      : {};
+
+    const restaurants = await Restaurant.find(query).populate('menu reviews');
     res.json(restaurants);
   } catch (err) {
     res.status(500).json({ error: err.message });

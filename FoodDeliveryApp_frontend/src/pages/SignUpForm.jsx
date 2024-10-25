@@ -1,33 +1,51 @@
-import  { useState } from 'react';
+import { useState } from 'react';
 
-const SignUpForm= ({ setCurrentForm }) => {
-  const [form, setForm] = useState({ email: '', password: '' });
+const SignUpPage = ({ setCurrentForm, onFormSubmit }) => {
+  const [formData, setFormData] = useState({
+    username: '',
+    password: '',
+    email: ''
+  });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setForm({ ...form, [name]: value });
+  const handleSubmit = (event) => {
+    event.preventDefault();
+ 
+    onFormSubmit();
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-
   return (
-    <div>
+    <div className="signup-container">
       <h1>Sign Up</h1>
       <form onSubmit={handleSubmit}>
-        <label>Email:</label>
-        <input type="email" name="email" value={form.email} onChange={handleChange} required />
-        <label>Password:</label>
-        <input type="password" name="password" value={form.password} onChange={handleChange} required />
-        <button type="submit">Sign Up</button>
+        <input
+          type="text"
+          name="username"
+          placeholder="Username"
+          value={formData.username}
+          onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+          required
+        />
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          value={formData.email}
+          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+          required
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          value={formData.password}
+          onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+          required
+        />
+        <button type="submit">Register</button>
       </form>
-      <p>
-        Already have an account? <button onClick={() => setCurrentForm('login')}>Login</button>
-      </p>
+      <button type="button" onClick={() => setCurrentForm('login')}>Back to Login</button>
     </div>
   );
 };
-}
 
-export default SignUpForm;
+export default SignUpPage;
