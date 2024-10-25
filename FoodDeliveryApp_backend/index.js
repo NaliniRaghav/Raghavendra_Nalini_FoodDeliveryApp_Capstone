@@ -54,6 +54,8 @@ import menuItemRoutes from './routes/menuitemRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
 import reviewRoutes from './routes/reviewRoutes.js';
 
+import seedData from './seedfile1.js';
+
 dotenv.config();
 
 const app = express();
@@ -104,3 +106,5 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
+
+seedData();

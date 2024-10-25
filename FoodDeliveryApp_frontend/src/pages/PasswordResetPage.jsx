@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import './RestaurantDisplayForm.css'
 
 const ResetPasswordPage = ({ setCurrentForm }) => {
   const [email, setEmail] = useState('');
@@ -21,7 +22,7 @@ const ResetPasswordPage = ({ setCurrentForm }) => {
       const response = await fetch('http://localhost:3000/api/users/reset-password', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, newPassword }) // Send the email and new password
+        body: JSON.stringify({ email, newPassword })  
       });
 
       const data = await response.json();
