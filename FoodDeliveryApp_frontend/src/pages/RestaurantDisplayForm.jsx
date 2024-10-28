@@ -1,361 +1,295 @@
-// import { useEffect, useState } from 'react';
-// import './RestaurantDisplayForm1.css'
-// import { fetchRandomQuote } from '../services/QuoteService';
 
-
-// const RestaurantDisplayForm = ({ setCurrentForm }) => {
-//   const [restaurants, setRestaurants] = useState([]);
-//   const [loading, setLoading] = useState(true);
-//   const [error, setError] = useState('');
-//   const [selectedCity, setSelectedCity] = useState('All Cities');
-//   const [filteredRestaurants, setFilteredRestaurants] = useState([]);
-//   const [searchQuery, setSearchQuery] = useState('');
-//   const [sortOption, setSortOption] = useState('');
-
-//   // Fetch restaurants on component mount
-//   useEffect(() => {
-//     const fetchRestaurants = async () => {
-//       try {
-//         const response = await fetch('http://localhost:3000/api/restaurants'); 
-//         if (!response.ok) {
-//           throw new Error('Failed to fetch restaurants');
-//         }
-//         const data = await response.json();
-//         setRestaurants(data);
-//         setFilteredRestaurants(data); // Initialize with all restaurants
-//       } catch (err) {
-//         setError(err.message || 'Failed to load restaurants');
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
-
-//     fetchRestaurants();
-//   }, []);
-
-//   // Handle city filtering
-//   const handleCityChange = (e) => {
-//     const city = e.target.value;
-//     setSelectedCity(city);
-//     filterAndSortRestaurants(searchQuery, city, sortOption);
-//   };
-
-//   // Handle sorting by rating or popularity
-//   const handleSortChange = (e) => {
-//     const option = e.target.value;
-//     setSortOption(option);
-//     filterAndSortRestaurants(searchQuery, selectedCity, option);
-//   };
-
-//   // Handle search by name or cuisine
-//   const handleSearch = (e) => {
-//     const query = e.target.value;
-//     setSearchQuery(query);
-//     filterAndSortRestaurants(query, selectedCity, sortOption);
-//   };
-
-//   // Filter and sort restaurants based on search, city, and sort options
-//   const filterAndSortRestaurants = (query, city, sortOption) => {
-//     let filtered = restaurants;
-
-//     if (city !== 'All Cities') {
-//       filtered = filtered.filter((restaurant) => restaurant.city === city);
-//     }
-
-//     if (query) {
-//       filtered = filtered.filter(
-//         (restaurant) =>
-//           restaurant.name.toLowerCase().includes(query.toLowerCase()) ||
-//           restaurant.cuisine.toLowerCase().includes(query.toLowerCase())
-//       );
-//     }
-
-//     if (sortOption === 'rating') {
-//       filtered.sort((a, b) => b.rating - a.rating);
-//     } else if (sortOption === 'popularity') {
-//       filtered.sort((a, b) => b.popularity - a.popularity);
-//     }
-
-//     setFilteredRestaurants(filtered);
-//   };
-
-//   const handleLogout = () => {
-//     setCurrentForm('login'); // Redirect to login
-//   };
-
-//   const handleProfile = () => {
-//     // Handle profile navigation or logic
-//     alert('Navigating to Profile Page');
-//   };
-
-//   if (loading) return <p>Loading...</p>;
-//   if (error) return <p style={{ color: 'red' }}>{error}</p>;
-
-//   return (
-//     <div>
-//        <h1> Food on the Fly </h1>
-//       <div className="menu">
-//         <button onClick={() => setCurrentForm('login')}>Back to Home</button>
-//         <select value={selectedCity} onChange={handleCityChange}>
-//           <option value="All Cities">All Cities</option>
-//           <option value="Bangalore">Bangalore</option>
-//           <option value="Gurgaon">Gurgaon</option>
-//           <option value="Hyderabad">Hyderabad</option>
-//           <option value="Delhi">Delhi</option>
-//           <option value="Mumbai">Mumbai</option>
-//           <option value="Pune">Pune</option>
-//         </select>
-//         <input
-//           type="text"
-//           placeholder="Search by name or cuisine"
-//           value={searchQuery}
-//           onChange={handleSearch}
-//         />
-//         <select value={sortOption} onChange={handleSortChange}>
-//           <option value="">Sort By</option>
-//           <option value="rating">Rating</option>
-//           <option value="popularity">Popularity</option>
-//         </select>
-//         <button onClick={handleProfile}>Profile</button>
-//         <button onClick={handleLogout}>Logout</button>
-//       </div>
-
-//       {/* Restaurant List */}
-//       <h3>Available Restaurants</h3>
-//       <div className="restaurant-list">
-//         {/* <h1>Available Restaurants</h1> */}
-//         {filteredRestaurants.length === 0 ? (
-//           <p>No restaurants available.</p>
-//         ) : (
-//           filteredRestaurants.map((restaurant) => (
-//             <div className="restaurant-card" key={restaurant._id}>
-//               {/* Placeholder for restaurant image */}
-//               <img
-//                 src={`https://via.placeholder.com/150?text=${restaurant.name}`}
-//                 alt={restaurant.name}
-//                 className="restaurant-image"
-//               />
-//               <h3>{restaurant.name}</h3>
-//               <p>Rating: {restaurant.rating || 'Not rated yet'}</p>
-//               <p>Address: {restaurant.address}</p>
-//               <p>Cuisine: {restaurant.cuisine}</p>
-//               <p>Phone: {restaurant.phone}</p>
-//             </div>
-//           ))
-//         )}
-//       </div>
-
-//       {/* Footer */}
-//       <footer className="footer">
-//         <div className="footer-content">
-//           <h2>Swiggy</h2>
-//           <p>© 2024 Swiggy Limited</p>
-//           <div className="footer-links">
-//             <p><strong>Company:</strong></p>
-//             <p>About Us | Swiggy Corporate | Careers | Team</p>
-//             <p>Swiggy One | Swiggy Instamart | Swiggy Dineout</p>
-//             <p>Help & Support | Partner with us | Ride with us</p>
-//           </div>
-//           <div className="footer-legal">
-//             <p><strong>Legal:</strong></p>
-//             <p>Terms & Conditions | Privacy Policy</p>
-//             <p>Available in: Bangalore, Gurgaon, Hyderabad, Delhi, Mumbai, Pune</p>
-//             <p><strong>Explore with Swiggy:</strong> Swiggy News | Snackables</p>
-//             <p><strong>Social Links:</strong> LinkedIn | Facebook</p>
-//           </div>
-//         </div>
-//       </footer>
-//     </div>
-//   );
-// };
-
-// export default RestaurantDisplayForm;
-import { useEffect, useState } from 'react';
-import './RestaurantDisplayForm1.css';
-import { fetchRandomQuote } from './InspirationalRandomQuotes';
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "./RestaurantDisplayForm.css";
+import "./InspirationalRandomQuotes.jsx"
+const MAX_IMAGES = 20;
 
 const RestaurantDisplayForm = ({ setCurrentForm }) => {
   const [restaurants, setRestaurants] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-  const [selectedCity, setSelectedCity] = useState('All Cities');
-  const [filteredRestaurants, setFilteredRestaurants] = useState([]);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [sortOption, setSortOption] = useState('');
-  const [quote, setQuote] = useState({ text: '', author: '' });  
+  const [error, setError] = useState("");
+  const [showProfile, setShowProfile] = useState(false);
+  const [userProfile, setUserProfile] = useState({
+    email: "",
+    phone: "",
+    address: { street: "", city: "", state: "", zipCode: "" },
+  });
+  const [cuisineType, setCuisineType] = useState("");
+  const [zipcode, setZipcode] = useState("");
+  const [sort, setSort] = useState("");
+  const [page, setPage] = useState(1);
+
+  const navigate = useNavigate();
+
+  // Fetch restaurants based on filters and pagination
   useEffect(() => {
     const fetchRestaurants = async () => {
+      setLoading(true);
+      setError("");
       try {
-        const response = await fetch('http://localhost:3000/api/restaurants'); 
-        if (!response.ok) {
-          throw new Error('Failed to fetch restaurants');
-        }
+        const response = await fetch(
+          `http://localhost:3000/api/restaurants?cuisineType=${cuisineType}&zipcode=${zipcode}&sort=${sort}&page=${page}&limit=12`
+        );
+        if (!response.ok) throw new Error("Failed to fetch restaurants");
         const data = await response.json();
-        setRestaurants(data);
-        setFilteredRestaurants(data);  
+        console.log(data);
+        setRestaurants(data.restaurants);
+        console.log(data.restaurants);
       } catch (err) {
-        setError(err.message || 'Failed to load restaurants');
+        setError(err.message || "Failed to load restaurants");
       } finally {
         setLoading(false);
       }
     };
-
     fetchRestaurants();
-  }, []);
+  }, [cuisineType, zipcode, sort, page]);
 
-   
-  useEffect(() => {
-
-    const loadQuote = async () => {
-  
-      const fetchedQuote = await fetchRandomQuote();
-  
-      setQuote(fetchedQuote);
-  
-    };
-  
-    loadQuote();
-  
-  }, []);
-
-   
-  const handleCityChange = (e) => {
-    const city = e.target.value;
-    setSelectedCity(city);
-    filterAndSortRestaurants(searchQuery, city, sortOption);
+  // Fetch user profile
+  const handleProfileClick = () => {
+    setShowProfile(true);
+    fetchUserProfile();
   };
 
-   
-  const handleSortChange = (e) => {
-    const option = e.target.value;
-    setSortOption(option);
-    filterAndSortRestaurants(searchQuery, selectedCity, option);
-  };
-
-   
-  const handleSearch = (e) => {
-    const query = e.target.value;
-    setSearchQuery(query);
-    filterAndSortRestaurants(query, selectedCity, sortOption);
-  };
-
-   
-  const filterAndSortRestaurants = (query, city, sortOption) => {
-    let filtered = restaurants;
-
-    if (city !== 'All Cities') {
-      filtered = filtered.filter((restaurant) => restaurant.city === city);
+  const fetchUserProfile = async () => {
+    try {
+      const response = await fetch('http://localhost:3000/api/users/me', {
+        credentials: 'include',  
+      });
+      if (!response.ok) throw new Error("Failed to fetch user profile");
+      const data = await response.json();
+      setUserProfile(data);
+    } catch (err) {
+      setError("Failed to load user profile");
     }
-
-    if (query) {
-      filtered = filtered.filter(
-        (restaurant) =>
-          restaurant.name.toLowerCase().includes(query.toLowerCase()) ||
-          restaurant.cuisine.toLowerCase().includes(query.toLowerCase())
-      );
+  };
+  
+ 
+  const handleLogout = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/api/users/logout", {
+        method: "POST",
+      });
+      if (response.ok) {
+        setCurrentForm("login");
+      }
+    } catch (error) {
+      console.error("Logout error:", error);
     }
-
-    if (sortOption === 'rating') {
-      filtered.sort((a, b) => b.rating - a.rating);
-    } else if (sortOption === 'popularity') {
-      filtered.sort((a, b) => b.popularity - a.popularity);
-    }
-
-    setFilteredRestaurants(filtered);
   };
 
-  const handleLogout = () => {
-    setCurrentForm('login');  
+  
+  const handleCardClick = (restaurantId) => {
+    navigate(`/menu/${restaurantId}`);
   };
 
-  const handleProfile = () => {
-     
-    alert('Navigating to Profile Page');
-  };
+ 
+  const handleNextPage = () => setPage(page + 1);
+  const handlePreviousPage = () => setPage(page > 1 ? page - 1 : 1);
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <p style={{ color: 'red' }}>{error}</p>;
+  if (error) return <p style={{ color: "red" }}>{error}</p>;
 
   return (
-    <div>
-       <h1> Food on the Fly </h1>
-        
-
-       
-      <div className="quote-of-the-day">
-        <blockquote>"{quote.text}"</blockquote>
-        <blockquote>"Krishna"</blockquote>
-        <cite>- {quote.author}</cite>
-      </div>
-
-      <div className="menu">
-        <button onClick={() => setCurrentForm('login')}>Back to Home</button>
-        <select value={selectedCity} onChange={handleCityChange}>
-          <option value="All Cities">All Cities</option>
-          <option value="Bangalore">Bangalore</option>
-          <option value="Gurgaon">Gurgaon</option>
-          <option value="Hyderabad">Hyderabad</option>
-          <option value="Delhi">Delhi</option>
-          <option value="Mumbai">Mumbai</option>
-          <option value="Pune">Pune</option>
-        </select>
-        <input
-          type="text"
-          placeholder="Search by name or cuisine"
-          value={searchQuery}
-          onChange={handleSearch}
-        />
-        <select value={sortOption} onChange={handleSortChange}>
-          <option value="">Sort By</option>
-          <option value="rating">Rating</option>
-          <option value="popularity">Popularity</option>
-        </select>
-        <button onClick={handleProfile}>Profile</button>
-        <button onClick={handleLogout}>Logout</button>
-      </div>
+    <div className="restaurant-display-form">
+      <header>
+        <h1>Food on the Fly</h1>
+        <div className="menu">
+          <button onClick={handleLogout}>Logout</button>
+          <button onClick={handleProfileClick}>Profile</button>
+          <button onClick={() => navigate("/")}>Back to Home</button>
+        </div>
+      </header>
 
   
-      <h3>Available Restaurants</h3>
-      <div className="restaurant-list">
-        {filteredRestaurants.length === 0 ? (
+      {showProfile && (
+        <div className="profile-form">
+          <h2>Update Profile</h2>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              setShowProfile(false);  
+            }}
+          >
+            <label>
+              Email:
+              <input
+                type="email"
+                value={userProfile.email}
+                onChange={(e) =>
+                  setUserProfile({ ...userProfile, email: e.target.value })
+                }
+              />
+            </label>
+            <label>
+              Phone:
+              <input
+                type="text"
+                value={userProfile.phone}
+                onChange={(e) =>
+                  setUserProfile({ ...userProfile, phone: e.target.value })
+                }
+              />
+            </label>
+            <button type="submit">Save</button>
+            <button type="button" onClick={() => setShowProfile(false)}>
+              Cancel
+            </button>
+          </form>
+        </div>
+      )}
+
+    
+      <div className="filters">
+        <label>
+          Cuisine:
+          <select
+            value={cuisineType}
+            onChange={(e) => setCuisineType(e.target.value)}
+          >
+            <option value="">Select Cuisine</option>
+            <option value="Italian">Italian</option>
+            <option value="Chinese">Chinese</option>
+            <option value="Indian">Indian</option>
+            <option value="Mexican">Mexican</option>
+            <option value="Japanese">Japanese</option>
+            <option value="Thai">Thai</option>
+            <option value="American">American</option>
+          </select>
+        </label>
+        <label>
+          Zipcode:
+          <input
+            type="text"
+            value={zipcode}
+            onChange={(e) => setZipcode(e.target.value)}
+          />
+        </label>
+        <label>
+          Sort by:
+          <select value={sort} onChange={(e) => setSort(e.target.value)}>
+            <option value="">Select Sort Option</option>
+            <option value="rating">Rating</option>
+            <option value="price">Price</option>
+          </select>
+        </label>
+      </div>
+
+      {/* Display restaurant cards */}
+      {/* <div className="restaurant-grid">
+        {restaurants.length === 0 ? (
           <p>No restaurants available.</p>
         ) : (
-          filteredRestaurants.map((restaurant) => (
-            <div className="restaurant-card" key={restaurant._id}>
-           
+          restaurants.map((restaurant) => (
+            <div
+              className="restaurant-card"
+              key={restaurant._id}
+              onClick={() => handleCardClick(restaurant._id)}
+            >
               <img
-                src={`https://via.placeholder.com/150?text=${restaurant.name}`}
-                alt={restaurant.name}
-                className="restaurant-image"
-              />
-              <h3>{restaurant.name}</h3>
-              <p>Rating: {restaurant.rating || 'Not rated yet'}</p>
-              <p>Address: {restaurant.address}</p>
-              <p>Cuisine: {restaurant.cuisine}</p>
-              <p>Phone: {restaurant.phone}</p>
+  src={`https://loremflickr.com/200/150/food,${restaurant.cuisineType}`}
+  alt={restaurant.name}
+  className="restaurant-image"
+  onError={(e) => {
+    e.target.src = "https://via.placeholder.com/200x150?text=No+Image+Available";
+  }}
+/>
+
+              <div className="restaurant-details">
+                <h3>{restaurant.name}</h3>
+                <p>Rating: {restaurant.averageRating || "Not rated yet"}</p>
+                <p>
+                  {restaurant.address.street}, {restaurant.address.city},{" "}
+                  {restaurant.address.state}, {restaurant.address.zipCode}
+                </p>
+                <p>Cuisine: {restaurant.cuisineType}</p>
+                <p>Price Range: {restaurant.priceRange || "N/A"}</p>
+              </div>
             </div>
           ))
         )}
+      </div> */}
+      {/* <div className="restaurant-grid">
+  {restaurants.length === 0 ? (
+    <p>No restaurants available.</p>
+  ) : (
+    restaurants.slice(0, 20).map((restaurant, index) => (
+      <div
+        className="restaurant-card"
+        key={restaurant._id}
+        onClick={() => handleCardClick(restaurant._id)}
+      >
+        <img
+          src={`/images/restaurant${index + 1}.jpg`} // Adjust to match your local image filenames
+          alt={restaurant.name}
+          className="restaurant-image"
+          onError={(e) => {
+            e.target.src = "https://via.placeholder.com/200x150?text=No+Image+Available";
+          }}
+        />
+
+        <div className="restaurant-details">
+          <h3>{restaurant.name}</h3>
+          <p>Rating: {restaurant.averageRating || "Not rated yet"}</p>
+          <p>
+            {restaurant.address.street}, {restaurant.address.city},{" "}
+            {restaurant.address.state}, {restaurant.address.zipCode}
+          </p>
+          <p>Cuisine: {restaurant.cuisineType}</p>
+          <p>Price Range: {restaurant.priceRange || "N/A"}</p>
+        </div>
+      </div>
+    ))
+  )}
+</div> */}
+
+<div className="restaurant-grid">
+  {restaurants.length === 0 ? (
+    <p>No restaurants available.</p>
+  ) : (
+    restaurants.map((restaurant) => (
+      <div
+        className="restaurant-card"
+        key={restaurant._id}
+        onClick={() => handleCardClick(restaurant._id)}
+      >
+        <img
+          src={restaurant.image}
+          alt={restaurant.name}
+          className="restaurant-image"
+          // onError={(e) => {
+          //   e.target.src = "https://via.placeholder.com/200x150?text=No+Image+Available";
+          // }}
+        />
+        <div className="restaurant-details">
+          <h3>{restaurant.name}</h3>
+          <p>Rating: {restaurant.rating || "Not rated yet"}</p>
+          <p>
+            {restaurant.address.street}, {restaurant.address.city},{" "}
+            {restaurant.address.state}, {restaurant.address.zipCode}
+          </p>
+          <p>Cuisine: {restaurant.cuisine}</p>
+          <p>Price Range: {restaurant.priceRange || "N/A"}</p>
+        </div>
+      </div>
+    ))
+  )}
+</div>
+
+   
+      <div className="pagination-controls">
+        <button onClick={handlePreviousPage} disabled={page === 1}>
+          Previous
+        </button>
+        <button onClick={handleNextPage} disabled={restaurants.length < 12}>
+          Next
+        </button>
       </div>
 
-      
       <footer className="footer">
         <div className="footer-content">
           <h2>Swiggy</h2>
           <p>© 2024 Swiggy Limited</p>
-          <div className="footer-links">
-            <p><strong>Company:</strong></p>
-            <p>About Us | Swiggy Corporate | Careers | Team</p>
-            <p>Swiggy One | Swiggy Instamart | Swiggy Dineout</p>
-            <p>Help & Support | Partner with us | Ride with us</p>
-          </div>
-          <div className="footer-legal">
-            <p><strong>Legal:</strong></p>
-            <p>Terms & Conditions | Privacy Policy</p>
-            <p>Available in: Bangalore, Gurgaon, Hyderabad, Delhi, Mumbai, Pune</p>
-            <p><strong>Explore with Swiggy:</strong> Swiggy News | Snackables</p>
-            <p><strong>Social Links:</strong> LinkedIn | Facebook</p>
-          </div>
         </div>
       </footer>
     </div>

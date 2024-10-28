@@ -1,68 +1,113 @@
+ 
+
 import express from 'express';
 import Restaurant from '../models/restaurant.js';
+import MenuItem from '../models/menuitem.js';
 
 const router = express.Router();
 
-// Get all restaurants with optional search query
-router.get('/', async (req, res) => {
-  const { search } = req.query;
-  try {
-    const query = search
-      ? { $or: [ { name: { $regex: search, $options: 'i' } }, { cuisine: { $regex: search, $options: 'i' } } ] }
-      : {};
 
-    const restaurants = await Restaurant.find(query).populate('menu reviews');
-    res.json(restaurants);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-// Get a single restaurant by ID
-router.get('/:id', async (req, res) => {
-  try {
-    const restaurant = await Restaurant.findById(req.params.id).populate('menu reviews');
-    if (!restaurant) return res.status(404).json({ message: 'Restaurant not found' });
-    res.json(restaurant);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-// Create a new restaurant
 router.post('/', async (req, res) => {
   try {
     const newRestaurant = new Restaurant(req.body);
     await newRestaurant.save();
     res.status(201).json(newRestaurant);
-  } catch (err) {
-    res.status(400).json({ error: err.message });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+ 
+router.get('/', async (req, res) => {
+  try {
+    const { cuisine, city, rating, sort, page = 1, limit = 10 } = req.query;
+
+   
+    const filters = {};
+    if (cuisine) filters.cuisine = cuisine;
+    if (city) filters["address.city"] = city;
+    if (rating) filters.rating = { $gte: parseFloat(rating) };
+
+  
+    const sortOptions = sort === 'rating' ? { rating: -1 } : { name: 1 };
+
+   
+    const pageNum = parseInt(page, 10);
+    const limitNum = parseInt(limit, 10);
+
+ 
+    const restaurants = await Restaurant.find(filters)
+      .sort(sortOptions)
+      .skip((pageNum - 1) * limitNum)
+      .limit(limitNum)
+      .populate('menuItems');  
+    const totalRestaurants = await Restaurant.countDocuments(filters);
+
+     
+    res.status(200).json({
+      restaurants,
+      pagination: {
+        total: totalRestaurants,
+        page: pageNum,
+        pages: Math.ceil(totalRestaurants / limitNum),
+      },
+    });
+  } catch (error) {
+    res.status(500).json({ error: `Error retrieving restaurants: ${error.message}` });
   }
 });
 
-// Update an existing restaurant
-router.put('/:id', async (req, res) => {
+ 
+router.get('/:id', async (req, res) => {
   try {
-    const restaurant = await Restaurant.findById(req.params.id);
+    const restaurant = await Restaurant.findById(req.params.id).populate('menuItems');
     if (!restaurant) return res.status(404).json({ message: 'Restaurant not found' });
-
-    Object.assign(restaurant, req.body);
-    await restaurant.save();
-
     res.json(restaurant);
-  } catch (err) {
-    res.status(400).json({ error: err.message });
+  } catch (error) {
+    res.status(500).json({ error: `Error retrieving restaurant: ${error.message}` });
   }
 });
+router.patch('/:id/image', async (req, res) => {
+  const { id } = req.params;
+  const { image } = req.body;  
+  if (!image) {
+    return res.status(400).json({ error: 'Image URL is required' });
+  }
 
-// Delete a restaurant
-router.delete('/:id', async (req, res) => {
   try {
-    const deletedRestaurant = await Restaurant.findByIdAndDelete(req.params.id);
-    if (!deletedRestaurant) return res.status(404).json({ message: 'Restaurant not found' });
-    res.json({ message: 'Restaurant deleted' });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+    const restaurant = await Restaurant.findByIdAndUpdate(
+      id,
+      { image },
+      { new: true }  
+    );
+
+    if (!restaurant) {
+      return res.status(404).json({ error: 'Restaurant not found' });
+    }
+
+    res.json({ message: 'Image updated successfully', restaurant });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to update image' });
+  }
+});
+router.patch('/:id', async (req, res) => {
+  const { id } = req.params;
+  const updateData = req.body;  
+  try {
+    const updatedRestaurant = await Restaurant.findByIdAndUpdate(
+      id,
+      { $set: updateData }, 
+      { new: true, runValidators: true } 
+    );
+
+    if (!updatedRestaurant) {
+      return res.status(404).json({ message: 'Restaurant not found' });
+    }
+
+    res.json(updatedRestaurant);
+  } catch (error) {
+    console.error('Error updating restaurant:', error);
+    res.status(500).json({ message: 'Internal server error' });
   }
 });
 

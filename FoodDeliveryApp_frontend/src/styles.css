@@ -1,4 +1,4 @@
-/* General Styles */
+ 
 body {
   font-family: 'Arial', sans-serif;
   background-color: #80add7;
@@ -10,7 +10,7 @@ body {
   min-height: 100vh;
 }
 
-/* Container Styles */
+ 
 .container {
   background-color: #ffffff;
   border-radius: 10px;
@@ -20,14 +20,14 @@ body {
   max-width: 400px;
 }
 
-/* Form Heading */
+ 
 h1 {
   text-align: center;
-  color: #333;
+  color: #e62e2e;
   margin-bottom: 20px;
 }
 
-/* Input Fields */
+ 
 input[type="text"],
 input[type="password"],
 input[type="email"] {
@@ -50,7 +50,7 @@ input[type="email"]:focus {
   background-color: #fff;
 }
 
-/* Buttons */
+ 
 button {
   width: 100%;
   
@@ -64,16 +64,14 @@ button {
   transition: background-color 0.3s;
 }
 
-
-/* Error Messages */
+ 
 p {
   color: red;
   font-size: 14px;
   margin-top: 10px;
   text-align: center;
 }
-
-/* Additional Links */
+ 
 button[type="button"] {
   background-color: transparent;
   color: #6c63ff;
@@ -87,8 +85,7 @@ button[type="button"] {
 button[type="button"]:hover {
   color: #333;
 }
-
-/* Specific Reset Button Style */
+ 
 .reset-password-container button {
   background-color: #ff6363;
 }
@@ -97,7 +94,7 @@ button[type="button"]:hover {
   background-color: #e14e4e;
 }
 
-/* Form Container Style */
+ 
 .login-container,
 .signup-container,
 .reset-password-container {
@@ -106,11 +103,10 @@ button[type="button"]:hover {
 
  
  
-/* Buttons */
 button {
   width: 100%;
-  background-color: #d3b8ff; /* Light purple background */
-  color: black; /* Button text is black */
+  background-color: #d3b8ff;  
+  color: black;  
   padding: 12px;
   border: none;
   border-radius: 5px;
@@ -118,8 +114,8 @@ button {
   font-size: 16px;
 }
 
-/* Specific Reset Button Style */
+ 
 .reset-password-container button {
-  background-color: #d3b8ff; /* Light purple background for reset button */
-  color: black; /* Button text is black for reset button as well */
+  background-color: #d3b8ff;  
+  color: black;  
 }

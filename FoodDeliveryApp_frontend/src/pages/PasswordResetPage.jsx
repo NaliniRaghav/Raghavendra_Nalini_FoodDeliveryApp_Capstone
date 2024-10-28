@@ -1,12 +1,14 @@
 import { useState } from 'react';
-import './RestaurantDisplayForm.css'
+import { useNavigate } from 'react-router-dom';
+import './RestaurantDisplayForm.css';
 
-const ResetPasswordPage = ({ setCurrentForm }) => {
+const ResetPasswordPage = () => {
   const [email, setEmail] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -30,7 +32,7 @@ const ResetPasswordPage = ({ setCurrentForm }) => {
       if (response.ok) {
         setSuccess('Password reset successful');
         setTimeout(() => {
-          setCurrentForm('login'); 
+          navigate('/'); 
         }, 2000);
       } else {
         setError(data.message || 'Failed to reset password');
@@ -72,7 +74,7 @@ const ResetPasswordPage = ({ setCurrentForm }) => {
         {error && <p style={{ color: 'red' }}>{error}</p>}
         {success && <p style={{ color: 'green' }}>{success}</p>}
       </form>
-      <button type="button" onClick={() => setCurrentForm('login')}>Back to Login</button>
+      <button type="button" onClick={() => navigate('/')}>Back to Login</button>
     </div>
   );
 };

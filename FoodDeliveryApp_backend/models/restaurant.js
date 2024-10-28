@@ -1,14 +1,37 @@
+// models/restaurant.js
+
 import mongoose from 'mongoose';
 
-const RestaurantSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  address: { type: String, required: true },
-  cuisineType: { type: String, required: true },
-  menu: [{ type: mongoose.Schema.Types.ObjectId, ref: 'MenuItem' }],
-  averageRating: { type: Number, default: 0 },
-  reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }]
+const restaurantSchema = new mongoose.Schema({
+  name: { type: String, required: true, index: true },
+  address: {
+    street: { type: String },
+    city: { type: String, required: true, index: true },
+    state: { type: String },
+    zipCode: { type: String },
+    country: { type: String, default: "USA" },
+  },
+  cuisine: { 
+    type: String, 
+    required: true, 
+    enum: ['Italian', 'Mexican', 'Chinese', 'Indian', 'Japanese', 'American', 'Mediterranean', 'Thai', 'French', 'Other'], 
+    index: true
+  },
+  phone: { 
+    type: String, 
+    required: true, 
+    unique: true, 
+    index: true
+  },
+  rating: { type: Number, default: 0 },
+  image: {
+    type: String,
+    default: '/images/placeholder.jpg',  
+  },
+  menuItems: [{ type: mongoose.Schema.Types.ObjectId, ref: 'MenuItem' }],  
 });
 
-const Restaurant = mongoose.model('Restaurant', RestaurantSchema);
+// Compound index for common queries
+restaurantSchema.index({ name: 1, cuisine: 1 });
 
-export default Restaurant;
+export default mongoose.model('Restaurant', restaurantSchema);
